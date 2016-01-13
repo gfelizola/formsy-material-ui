@@ -13,10 +13,12 @@ export default React.createClass({
   handleChange: function handleChange(event) {
     if(this.getErrorMessage() != null){
       this.setValue(event.currentTarget.value);
+      if ( this.props.onChange ) { this.props.onChange(event) };
     }
     else{
       if (this.isValidValue(event.target.value)) {
         this.setValue(event.target.value);
+        if ( this.props.onChange ) { this.props.onChange(event) };
       }
       else{
         this.setState({
@@ -29,10 +31,12 @@ export default React.createClass({
 
   handleBlur: function handleBlur(event) {
     this.setValue(event.currentTarget.value);
+    if ( this.props.onBlur ) { this.props.onBlur(event) };
   },
 
   handleEnterKeyDown: function handleEnterKeyDown(event) {
     this.setValue(event.currentTarget.value);
+    if ( this.props.onEnterKeyDown ) { this.props.onEnterKeyDown(event) };
   },
 
   render: function () {
