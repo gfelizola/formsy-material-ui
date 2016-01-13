@@ -8,6 +8,7 @@ export default {
 
   handleValueChange: function (event, value) {
     this.setValue(value);
+    if( this.props.onChange ) this.props.onChange(event, value);
   }
 
 };

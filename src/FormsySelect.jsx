@@ -12,6 +12,7 @@ export default React.createClass({
 
   handleChange: function (event) {
     this.setValue(event.target.value);
+    if( this.props.onChange ) this.props.onChange(event, event.target.value);
   },
 
   render: function () {
