@@ -1,6 +1,6 @@
 {
   "name": "formsy-material-ui-express",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "A formsy-react compatibility wrapper for Material-UI form components.",
   "main": "./lib/index.js",
   "scripts": {
