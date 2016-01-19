@@ -10,9 +10,9 @@ export default React.createClass({
     name: React.PropTypes.string.isRequired
   },
 
-  handleChange: function (event) {
-    this.setValue(event.target.value);
-    if( this.props.onChange ) this.props.onChange(event, event.target.value);
+  handleChange: function (event, key, value) {
+    this.setValue(value);
+    if( this.props.onChange ) this.props.onChange(event, value);
   },
 
   render: function () {
