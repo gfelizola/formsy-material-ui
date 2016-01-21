@@ -10,15 +10,22 @@ export default React.createClass({
     value: React.PropTypes.string
   },
 
-  handleChange: function handleChange(event) {
+  handleChange(event) {
+    this.setState({
+      _value: event.currentTarget.value,
+      _isPristine: false
+    });
+
+    if ( this.props.onChange ) { this.props.onChange(event) };
+  },
+
+  handleBlur(event) {
     if(this.getErrorMessage() != null){
       this.setValue(event.currentTarget.value);
-      if ( this.props.onChange ) { this.props.onChange(event) };
     }
     else{
       if (this.isValidValue(event.target.value)) {
         this.setValue(event.target.value);
-        if ( this.props.onChange ) { this.props.onChange(event) };
       }
       else{
         this.setState({
@@ -27,16 +34,8 @@ export default React.createClass({
         });
       }
     }
-  },
 
-  handleBlur: function handleBlur(event) {
-    this.setValue(event.currentTarget.value);
     if ( this.props.onBlur ) { this.props.onBlur(event) };
-  },
-
-  handleEnterKeyDown: function handleEnterKeyDown(event) {
-    this.setValue(event.currentTarget.value);
-    if ( this.props.onEnterKeyDown ) { this.props.onEnterKeyDown(event) };
   },
 
   render: function () {
@@ -44,9 +43,8 @@ export default React.createClass({
       <TextField
         {...this.props}
         defaultValue={this.props.value}
-        onChange={this.handleChange}
         onBlur={this.handleBlur}
-        onEnterKeyDown={this.handleEnterKeyDown}
+        onChange={this.handleChange}
         errorText={this.getErrorMessage()}
         value={this.getValue()} />
     );
