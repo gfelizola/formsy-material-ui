@@ -11,7 +11,10 @@ export default React.createClass({
   },
 
   handleChange: function (event, key, value) {
-    this.setValue(value);
+    let newValue = value[ this.props.valueMember || 'payload' ];
+    if( newValue != this.getValue() ){
+      this.setValue(newValue);
+    }
     if( this.props.onChange ) this.props.onChange(event, value);
   },
 
