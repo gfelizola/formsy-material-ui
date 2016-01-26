@@ -1,5 +1,5 @@
-import React     from 'react';
-import Formsy    from 'formsy-react';
+import React from 'react';
+import Formsy from 'formsy-react';
 import TextField from 'material-ui/lib/text-field';
 
 export default React.createClass({
@@ -10,16 +10,7 @@ export default React.createClass({
     value: React.PropTypes.string
   },
 
-  handleChange(event) {
-    this.setState({
-      _value: event.currentTarget.value,
-      _isPristine: false
-    });
-
-    if ( this.props.onChange ) { this.props.onChange(event) };
-  },
-
-  handleBlur(event) {
+  handleChange: function handleChange(event) {
     if(this.getErrorMessage() != null){
       this.setValue(event.currentTarget.value);
     }
@@ -35,7 +26,17 @@ export default React.createClass({
       }
     }
 
+    if ( this.props.onChange ) { this.props.onChange(event) };
+  },
+
+  handleBlur: function handleBlur(event) {
+    this.setValue(event.currentTarget.value);
     if ( this.props.onBlur ) { this.props.onBlur(event) };
+  },
+
+  handleEnterKeyDown: function handleEnterKeyDown(event) {
+    this.setValue(event.currentTarget.value);
+    if ( this.props.onEnterKeyDown ) { this.props.onEnterKeyDown(event) };
   },
 
   render: function () {
@@ -43,10 +44,12 @@ export default React.createClass({
       <TextField
         {...this.props}
         defaultValue={this.props.value}
-        onBlur={this.handleBlur}
         onChange={this.handleChange}
+        onBlur={this.handleBlur}
+        onEnterKeyDown={this.handleEnterKeyDown}
         errorText={this.getErrorMessage()}
-        value={this.getValue()} />
+        value={this.getValue()}
+      />
     );
   }
 });
