@@ -1,167 +1,66 @@
 # formsy-material-ui [![npm version](https://badge.fury.io/js/formsy-material-ui.svg)](https://badge.fury.io/js/formsy-material-ui)
 
-[formsy-react](https://github.com/christianalfoni/formsy-react) is a form validation component for React forms.
-This is a wrapper for [Material-UI](http://material-ui.com/) form components to allow them to be used with formsy-react.
+This library is a wrapper for [Material-UI](http://material-ui.com/) form components to allow them to be used
+with [formsy-react](https://github.com/christianalfoni/formsy-react), a form validation component for React forms.
 
 ## Installation
 
-`$ npm install formsy-material-ui`
+To add formsy-material-ui to you package.json and install it, run:
 
-Note: For React 0.13.x compatibility, specify formsy-react 0.14.1 in your app.
+```
+$ npm install --save formsy-material-ui
+```
+
+You will also need to add formsy-react if not already installed:
+
+```
+$ npm install --save formsy-react
+```
+
+Note: For React 15.0.x compatibility, specify `"formsy-react": "^0.18.0"`.
 
 ## Usage
 
-Note: for `FormsyText` you must use `value` instead of `defaultValue` to set a default value.
-
-As of 0.3.0 the library is split into separate modules, so you can import only those needed for a particular form.
-This will save overhead particularly if you are not using the Date and / or Time components.
+### ES6 Imports
 
 ```js
-var FormsyCheckbox = require('formsy-material-ui/lib/FormsyCheckbox');
-var FormsyDate = require('formsy-material-ui/lib/FormsyDate');
-var FormsyRadio = require('formsy-material-ui/lib/FormsyRadio');
-var FormsyRadioGroup = require('formsy-material-ui/lib/FormsyRadioGroup');
-var FormsySelect = require('formsy-material-ui/lib/FormsySelect');
-var FormsyText = require('formsy-material-ui/lib/FormsyText');
-var FormsyTime = require('formsy-material-ui/lib/FormsyTime');
-var FormsyToggle = require('formsy-material-ui/lib/FormsyToggle');
+import FormsyCheckbox from 'formsy-material-ui/lib/FormsyCheckbox';
+import FormsyDate from 'formsy-material-ui/lib/FormsyDate';
+import FormsyRadio from 'formsy-material-ui/lib/FormsyRadio';
+import FormsyRadioGroup from 'formsy-material-ui/lib/FormsyRadioGroup';
+import FormsySelect from 'formsy-material-ui/lib/FormsySelect';
+import FormsyText from 'formsy-material-ui/lib/FormsyText';
+import FormsyTime from 'formsy-material-ui/lib/FormsyTime';
+import FormsyToggle from 'formsy-material-ui/lib/FormsyToggle';
 ```
 
-If you prefer you can import the whole library, and associated MUI components, by requiring `formsy-material-ui`
-this will have the same footprint, regardless of which components you chose to assign in the following line(s):
-
-### ES6:
+OR:
 
 ```js
-const FMUI = require('formsy-material-ui');
-const { FormsyCheckbox, FormsyDate, FormsyRadio, FormsyRadioGroup, FormsySelect, FormsyText, FormsyTime, FormsyToggle } = FMUI;
+import { FormsyCheckbox, FormsyDate, FormsyRadio, FormsyRadioGroup, 
+  FormsySelect, FormsyText, FormsyTime, FormsyToggle } from 'formsy-material-ui/lib';
 ```
 
-### ES5:
+### Events
 
-```js
-var FMUI = require('formsy-material-ui');
-var FormsyCheckbox = FMUI.FormsyCheckbox;
-var FormsyDate = FMUI.FormsyDate;
-var FormsyRadio = FMUI.FormsyRadio;
-var FormsyRadioGroup = FMUI.FormsyRadioGroup;
-var FormsySelect = FMUI.FormsySelect;
-var FormsyText = FMUI.FormsyText;
-var FormsyTime = FMUI.FormsyTime;
-var FormsyToggle = FMUI.FormsyToggle;
-```
+Components allow for `onChange` event handlers in props. They are fired when the value of the 
+component changes, regardless of the underlying handler (eg, `FomrsyToggle` uses `onToggle` internally, but we
+still use `onChange` in props to hook into the event.)
+
+The call back signatures for all `onChange` handlers conform to 
+ Material-UI's proposed [Standardized Callback Signatures](https://github.com/callemall/material-ui/issues/2957).  
+
+An example usage of this would be to use an `onChange` for the FormsySelect and receive notifications when it changes.
 
 ### Examples
 
 #### Example App
-[Live demo](http://formsy-mui-demo.meteor.com), code: [formsy-material-ui](https://github.com/mbrookes/formsy-mui-demo)
+
+The `formsy-material-ui` repo contains a [sample webpack SPA](https://github.com/mbrookes/formsy-material-ui/tree/master/examples/webpack-example).
 
 #### Example Code
-```jsx
-const FMUI = require('formsy-material-ui');
-const { FormsyCheckbox, FormsyDate, FormsyRadio, FormsyRadioGroup, FormsySelect, FormsyText, FormsyTime, FormsyToggle } = FMUI;
-const RaisedButton = require('material-ui/lib/raised-button');
 
-const Form = React.createClass({
-
-  getInitialState: function () {
-    return {
-      canSubmit: false
-    };
-  },
-
-  errorMessages: {
-    wordsError: "Please only use letters"
-  },
-
-  selectFieldItems: [
-    { payload: 'never', text: 'Never' },
-    { payload: 'nightly', text: 'Every Night' },
-    { payload: 'weeknights', text: 'Weeknights' }
-  ],
-
-  enableButton: function () {
-    this.setState({
-      canSubmit: true
-    });
-  },
-
-  disableButton: function () {
-    this.setState({
-      canSubmit: false
-    });
-  },
-
-  submitForm: function (model) {
-    // Submit your validated form
-    console.log("Model: ", model);
-  },
-
-  render: function () {
-    let { wordsError } = this.errorMessages;
-
-    return (
-      <Formsy.Form
-        onValid={this.enableButton}
-        onInvalid={this.disableButton}
-        onValidSubmit={this.submitForm} >
-
-         <FormsyText
-          name='name'
-          validations='isWords'
-          validationError={wordsError}
-          required
-          hintText="What is your name?"
-          value="Bob"
-          floatingLabelText="Name" />
-
-        <FormsySelect
-          name='frequency'
-          required
-          floatingLabelText="How often do you?"
-          menuItems={this.selectFieldItems}/>
-
-        <FormsyDate
-          name='date'
-          required
-          floatingLabelText="Date" />
-
-        <FormsyTime
-          name='time'
-          required
-          floatingLabelText="Time" />
-
-        <FormsyCheckbox
-          name='agree'
-          label="Do you agree to disagree?"
-          defaultChecked={true} />
-
-        <FormsyToggle
-          name='toggle'
-          label="Toggle" />
-
-        <FormsyRadioGroup name="shipSpeed" defaultSelected="not_light">
-          <FormsyRadio
-            value="light"
-            label="prepare for light speed" />
-          <FormsyRadio
-            value="not_light"
-            label="light speed too slow" />
-          <FormsyRadio
-            value="ludicrous"
-            label="go to ludicrous speed"
-            disabled={true} />
-        </FormsyRadioGroup>
-
-        <RaisedButton
-          type="submit"
-          label="Submit"
-          disabled={!this.state.canSubmit} />
-      </Formsy.Form>
-    );
-  }
-});
-```
+You can find an [example form](https://github.com/mbrookes/formsy-material-ui/blob/master/examples/webpack-example/src/app/Main.js#L80) in the example app directory.
 
 ## Known Issues
 

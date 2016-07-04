@@ -1,30 +1,53 @@
-import React              from 'react';
-import Formsy             from 'formsy-react';
-import SelectField        from 'material-ui/lib/select-field';
-import FormComponentMixin from './FormComponentMixin';
+import React from 'react';
+import Formsy from 'formsy-react';
+import SelectField from 'material-ui/SelectField';
+import { setMuiComponentAndMaybeFocus } from './utils';
 
-export default React.createClass({
-  mixins: [ Formsy.Mixin],
+const FormsySelect = React.createClass({
 
   propTypes: {
-    name: React.PropTypes.string.isRequired
+    children: React.PropTypes.node,
+    name: React.PropTypes.string.isRequired,
+    onChange: React.PropTypes.func,
+    value: React.PropTypes.any,
   },
 
-  handleChange: function (event, key, value) {
-    let newValue = value[ this.props.valueMember || 'payload' ];
-    if( newValue != this.getValue() ){
-      this.setValue(newValue);
-    }
-    if( this.props.onChange ) this.props.onChange(event, value);
+  mixins: [Formsy.Mixin],
+
+  getInitialState() {
+    return {
+      hasChanged: false,
+    };
   },
 
-  render: function () {
+  handleChange(event, index, value) {
+    this.setValue(value);
+
+    this.setState({
+      hasChanged: value !== '',
+    });
+
+    if (this.props.onChange) this.props.onChange(event, value, index);
+  },
+
+  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus,
+
+  render() {
+    let { value, ...rest } = this.props;
+    value = this.state.hasChanged ? this.getValue() : value;
+
     return (
       <SelectField
-        {...this.props}
-        onChange={this.handleChange}
+        {...rest}
         errorText={this.getErrorMessage()}
-        value={this.getValue()} />
+        onChange={this.handleChange}
+        ref={this.setMuiComponentAndMaybeFocus}
+        value={value}
+      >
+        {this.props.children}
+      </SelectField>
     );
   }
 });
+
+export default FormsySelect;

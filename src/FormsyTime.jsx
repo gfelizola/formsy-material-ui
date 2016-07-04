@@ -1,16 +1,51 @@
-import React              from 'react';
-import Formsy             from 'formsy-react';
-import TimePicker         from 'material-ui/lib/time-picker/time-picker';
-import FormComponentMixin from './FormComponentMixin';
+import React from 'react';
+import Formsy from 'formsy-react';
+import TimePicker from 'material-ui/TimePicker';
+import { setMuiComponentAndMaybeFocus } from './utils';
 
-export default React.createClass({
-  mixins: [ Formsy.Mixin, FormComponentMixin ],
+const FormsyTime = React.createClass({
 
-  render: function () {
+  propTypes: {
+    defaultTime: React.PropTypes.object,
+    name: React.PropTypes.string.isRequired,
+    onChange: React.PropTypes.func,
+    value: React.PropTypes.object,
+  },
+
+  mixins: [Formsy.Mixin],
+
+  componentDidMount() {
+    const { defaultTime } = this.props;
+    const value = this.getValue();
+
+    if (typeof value === 'undefined' && typeof defaultTime !== 'undefined') {
+      this.setValue(defaultTime);
+    }
+  },
+
+  handleChange(event, value) {
+    this.setValue(value);
+    if (this.props.onChange) this.props.onChange(event, value);
+  },
+
+  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus,
+
+  render() {
+    const {
+      defaultTime, // eslint-disable-line no-unused-vars
+      ...rest,
+    } = this.props;
+
     return (
       <TimePicker
-        {...this.props}
-        onChange={this.handleValueChange} />
+        {...rest}
+        errorText={this.getErrorMessage()}
+        onChange={this.handleChange}
+        ref={this.setMuiComponentAndMaybeFocus}
+        value={this.getValue()}
+      />
     );
-  }
+  },
 });
+
+export default FormsyTime;

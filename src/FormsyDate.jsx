@@ -1,21 +1,51 @@
-import React              from 'react';
-import Formsy             from 'formsy-react';
-import DatePicker         from 'material-ui/lib/date-picker/date-picker';
-import FormComponentMixin from './FormComponentMixin';
+import React from 'react';
+import Formsy from 'formsy-react';
+import DatePicker from 'material-ui/DatePicker';
+import { setMuiComponentAndMaybeFocus } from './utils';
 
-export default React.createClass({
-  mixins: [ Formsy.Mixin, FormComponentMixin ],
+const FormsyDate = React.createClass({
 
-  render: function () {
+  propTypes: {
+    defaultDate: React.PropTypes.object,
+    name: React.PropTypes.string.isRequired,
+    onChange: React.PropTypes.func,
+    value: React.PropTypes.object,
+  },
+
+  mixins: [Formsy.Mixin],
+
+  componentDidMount() {
+    const { defaultDate } = this.props;
+    const value = this.getValue();
+
+    if (typeof value === 'undefined' && typeof defaultDate !== 'undefined') {
+      this.setValue(defaultDate);
+    }
+  },
+
+  handleChange(event, value) {
+    this.setValue(value);
+    if (this.props.onChange) this.props.onChange(event, value);
+  },
+
+  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus,
+
+  render() {
+    const {
+        defaultDate, // eslint-disable-line no-unused-vars
+        ...rest,
+    } = this.props;
+
     return (
       <DatePicker
-        // Sets the default date format to be ISO8601 (YYYY-MM-DD), accounting for current timezone
-        formatDate={(date) => (new Date(date.toDateString()+" 12:00:00 +0000")).toISOString().substring(0,10)}
-        {...this.props}
-        defaultValue={this.props.value}
-        onChange={this.handleValueChange}
+        {...rest}
         errorText={this.getErrorMessage()}
-        value={this.getValue()} />
+        onChange={this.handleChange}
+        ref={this.setMuiComponentAndMaybeFocus}
+        value={this.getValue()}
+      />
     );
-  }
+  },
 });
+
+export default FormsyDate;

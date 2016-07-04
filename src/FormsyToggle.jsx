@@ -1,21 +1,46 @@
-import React              from 'react';
-import Formsy             from 'formsy-react';
-import Toggle             from 'material-ui/lib/toggle';
-import FormComponentMixin from './FormComponentMixin';
+import React from 'react';
+import Formsy from 'formsy-react';
+import Toggle from 'material-ui/Toggle';
+import { setMuiComponentAndMaybeFocus } from './utils';
 
-export default React.createClass({
-  mixins: [ Formsy.Mixin, FormComponentMixin ],
+const FormsyToggle = React.createClass({
 
-  componentDidMount: function () {
-    this.setValue(this._toggle.isToggled());
+  propTypes: {
+    defaultToggled: React.PropTypes.bool,
+    name: React.PropTypes.string.isRequired,
+    onChange: React.PropTypes.func,
   },
 
-  render: function () {
+  mixins: [Formsy.Mixin],
+
+  componentDidMount() {
+    this.setValue(this.muiComponent.isToggled());
+  },
+
+  handleChange(event, value) {
+    this.setValue(value);
+    if (this.props.onChange) this.props.onChange(event, value);
+  },
+
+  setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus,
+
+  render() {
+    const { defaultToggled, ...rest } = this.props;
+    let value = this.getValue();
+
+    if (typeof value === 'undefined') {
+      value = (typeof defaultToggled !== 'undefined') ? defaultToggled : false;
+    }
+
     return (
       <Toggle
-        {...this.props}
-        ref={(c) => this._toggle = c}
-        onToggle={this.handleValueChange} />
+        {...rest}
+        onToggle={this.handleChange}
+        ref={this.setMuiComponentAndMaybeFocus}
+        toggled={value}
+      />
     );
-  }
+  },
 });
+
+export default FormsyToggle;
