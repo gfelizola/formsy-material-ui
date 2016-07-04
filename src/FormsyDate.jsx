@@ -1,6 +1,6 @@
 import React from 'react';
 import Formsy from 'formsy-react';
-import DatePicker from 'material-ui/DatePicker';
+import DatePicker from 'material-ui-express/DatePicker';
 import { setMuiComponentAndMaybeFocus } from './utils';
 
 const FormsyDate = React.createClass({

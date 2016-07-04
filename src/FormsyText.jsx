@@ -1,7 +1,7 @@
 import React from 'react';
 import keycode from 'keycode';
 import Formsy from 'formsy-react';
-import TextField from 'material-ui/TextField';
+import TextField from 'material-ui-express/TextField';
 import { setMuiComponentAndMaybeFocus } from './utils';
 
 const FormsyText = React.createClass({

@@ -1,6 +1,6 @@
 import React from 'react';
 import Formsy from 'formsy-react';
-import Toggle from 'material-ui/Toggle';
+import Toggle from 'material-ui-express/Toggle';
 import { setMuiComponentAndMaybeFocus } from './utils';
 
 const FormsyToggle = React.createClass({

@@ -1,6 +1,6 @@
 import React from 'react';
 import Formsy from 'formsy-react';
-import { RadioButtonGroup } from 'material-ui/RadioButton';
+import { RadioButtonGroup } from 'material-ui-express/RadioButton';
 import { setMuiComponentAndMaybeFocus } from './utils';
 
 const FormsyRadioGroup = React.createClass({

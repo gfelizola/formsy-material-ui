@@ -1,6 +1,6 @@
 import React from 'react';
 import Formsy from 'formsy-react';
-import SelectField from 'material-ui/SelectField';
+import SelectField from 'material-ui-express/SelectField';
 import { setMuiComponentAndMaybeFocus } from './utils';
 
 const FormsySelect = React.createClass({
