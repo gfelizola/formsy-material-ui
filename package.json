@@ -1,6 +1,6 @@
 {
   "name": "formsy-material-ui-express",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A formsy-react compatibility wrapper for Material-UI form components.",
   "main": "./lib/index.js",
   "scripts": {
@@ -19,7 +19,11 @@
     "src"
   ],
   "dependencies": {
-    "keycode": "^2.1.0"
+    "lodash": "^3.10.1",
+    "material-ui": "^0.14.0",
+    "react": "^0.14.5",
+    "react-dom": "^0.14.5",
+    "react-tap-event-plugin": "^0.2.1"
   },
   "peerDependencies": {
     "formsy-react": "^0.18.0",
@@ -84,12 +88,5 @@
   "bugs": {
     "url": "https://github.com/gfelizola/formsy-material-ui/issues"
   },
-  "homepage": "https://github.com/gfelizola/formsy-material-ui#readme",
-  "dependencies": {
-    "lodash": "^3.10.1",
-    "material-ui": "^0.14.0",
-    "react": "^0.14.5",
-    "react-dom": "^0.14.5",
-    "react-tap-event-plugin": "^0.2.1"
-  }
+  "homepage": "https://github.com/gfelizola/formsy-material-ui#readme"
 }
