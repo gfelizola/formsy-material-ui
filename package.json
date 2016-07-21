@@ -21,8 +21,8 @@
   "dependencies": {
     "lodash": "^3.10.1",
     "material-ui-express": "0.15.1",
-    "react": "^15.1.0",
-    "react-dom": "^15.1.0",
+    "react": "15.1.0",
+    "react-dom": "15.1.0",
     "react-tap-event-plugin": "^1.0.0"
   },
   "devDependencies": {
@@ -55,7 +55,7 @@
     "karma-webpack": "^1.7.0",
     "mocha": "^2.4.5",
     "phantomjs-prebuilt": "^2.1.4",
-    "react-addons-test-utils": "^15.1.0",
+    "react-addons-test-utils": "15.1.0",
     "react-tap-event-plugin": "1.0",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0",
