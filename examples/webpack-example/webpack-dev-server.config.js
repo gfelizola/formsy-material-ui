@@ -4,6 +4,8 @@ const buildPath = path.resolve(__dirname, 'build');
 const nodeModulesPath = path.resolve(__dirname, 'node_modules');
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
 
+console.log("Path", path.resolve(__dirname, '../../src') );
+
 const config = {
   //Entry points to the project
   entry: [
@@ -15,6 +17,10 @@ const config = {
   resolve: {
     extensions: ["", ".js"],
     //node_modules: ["web_modules", "node_modules"]  (Default Settings)
+    alias: {
+      // material-ui requires will be searched in src folder, not in node_modules
+      'formsy-material-ui-express': path.resolve(__dirname, '../../'),
+    },
   },
   //Server Configuration options
   devServer:{
@@ -22,7 +28,7 @@ const config = {
     devtool: 'eval',
     hot: true,        //Live-reload
     inline: true,
-    port: 3000,        //Port Number
+    port: 3001,        //Port Number
     host: 'localhost',  //Change to '0.0.0.0' for external facing server
   },
   devtool: 'eval',
@@ -45,9 +51,9 @@ const config = {
       {
         //React-hot loader and
         test: /\.js$/,  //All .js files
-        loaders: ['react-hot', 'babel-loader'], //react-hot is like browser sync and babel loads jsx and es6-7
+        loaders: ['babel-loader'], //react-hot is like browser sync and babel loads jsx and es6-7
         // loaders: ['react-hot'], //react-hot is like browser sync and babel loads jsx and es6-7
-        exclude: [nodeModulesPath, /formsy-material-ui\/node_modueles/], // Make it work with `npm link`ed fmui
+        exclude: [nodeModulesPath], // Make it work with `npm link`ed fmui
       },
     ],
   },
