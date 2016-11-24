@@ -8,11 +8,13 @@ const FormsyRadioGroup = React.createClass({
 
   propTypes: {
     children: React.PropTypes.node,
+    defaultSelected: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number, React.PropTypes.bool]),
     name: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func,
     validationError: React.PropTypes.string,
     validationErrors: React.PropTypes.object,
     validations: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.object]),
+    value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number, React.PropTypes.bool]),
   },
 
   mixins: [Formsy.Mixin],
@@ -29,10 +31,12 @@ const FormsyRadioGroup = React.createClass({
   setMuiComponentAndMaybeFocus: setMuiComponentAndMaybeFocus,
 
   render() {
-    const {
-      validations, // eslint-disable-line no-unused-vars
-      validationError, // eslint-disable-line no-unused-vars
-      validationErrors, // eslint-disable-line no-unused-vars
+    let {
+      validations, // eslint-disable-line no-unused-vars, prefer-const
+      validationError, // eslint-disable-line no-unused-vars, prefer-const
+      validationErrors, // eslint-disable-line no-unused-vars, prefer-const
+      defaultSelected, // eslint-disable-line prefer-const
+      value,
       ...rest } = this.props;
 
       // remove unknown props from children
@@ -46,11 +50,21 @@ const FormsyRadioGroup = React.createClass({
       return React.createElement(RadioButton, rest);
     });
 
+    // For backward compatibility or for
+    // users used to MaterialUI, use the "defaultSelected"
+    // attribute for the "value" if the value was not
+    // explicitly set.
+    if (typeof value === 'undefined') {
+      value = defaultSelected;
+    }
+
     return (
       <RadioButtonGroup
         {...rest}
         ref={this.setMuiComponentAndMaybeFocus}
         onChange={this.handleValueChange}
+        valueSelected={this.getValue()}
+        defaultSelected={value}
       >
         {children}
       </RadioButtonGroup>
