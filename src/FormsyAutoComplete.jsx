@@ -52,6 +52,8 @@ const FormsyAutoComplete = React.createClass({
       defaultValue, // eslint-disable-line no-unused-vars
       onFocus,
       value, // eslint-disable-line no-unused-vars
+      validationError,
+      validationErrors,
       ...rest } = this.props;
     return (
       <AutoComplete

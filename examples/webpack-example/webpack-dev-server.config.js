@@ -19,7 +19,8 @@ const config = {
     //node_modules: ["web_modules", "node_modules"]  (Default Settings)
     alias: {
       // material-ui requires will be searched in src folder, not in node_modules
-      'formsy-material-ui-express': path.resolve(__dirname, '../../'),
+      'material-ui': 'material-ui-express',
+      'formsy-material-ui': path.resolve(__dirname, '../../'),
     },
   },
   //Server Configuration options

@@ -41,6 +41,7 @@ const FormsySelect = React.createClass({
     const { validations, // eslint-disable-line no-unused-vars
         validationError, // eslint-disable-line no-unused-vars
         validationErrors, // eslint-disable-line no-unused-vars
+        menuItems,
       ...rest } = this.props;
 
     value = this.state.hasChanged ? this.getValue() : value;
