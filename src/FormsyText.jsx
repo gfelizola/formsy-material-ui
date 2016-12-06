@@ -110,8 +110,13 @@ const FormsyText = React.createClass({
       validationError, // eslint-disable-line no-unused-vars
       validationErrors, // eslint-disable-line no-unused-vars
       value, // eslint-disable-line no-unused-vars
+      underlineStyle,
+      underlineFocusStyle,
       ...rest,
     } = this.props;
+
+    let validUnderlineStyle = Object.assign( this.state.isValid ? { color: this.validationColor() } : {}, underlineStyle );
+    let validUnderlineFocusStyle = Object.assign( this.state.isValid ? { color: this.validationColor() } : {}, underlineFocusStyle );
 
     return (
       <TextField
@@ -122,8 +127,8 @@ const FormsyText = React.createClass({
         onKeyDown={this.handleKeyDown}
         ref={this.setMuiComponentAndMaybeFocus}
         value={this.state.value}
-        underlineStyle={this.state.isValid ? { color: this.validationColor() } : {}}
-        underlineFocusStyle={this.state.isValid ? { color: this.validationColor() } : {}}
+        underlineStyle={ validUnderlineStyle }
+        underlineFocusStyle={ validUnderlineFocusStyle }
       />
     );
   },
